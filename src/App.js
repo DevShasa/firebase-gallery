@@ -1,6 +1,6 @@
 import Nav from "./components/Nav";
 import Upload from "./components/upload/Upload";
-import Imagelist from "./components/imagesList/Imagelist";
+import QuiltedImageList from "./components/imagesList/Imagelist";
 import { Container } from "@mui/material";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <Container maxWidth="lg" sx={{textAlign: 'center', mt: '3rem'}}>
       <Nav/>
       <Upload />
-      <Imagelist />
+      <QuiltedImageList />
     </Container>
   );
 }

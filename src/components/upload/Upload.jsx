@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Form from "./Form";
 
 const Upload = () => {
     return (
-        <div>Adding images</div>
+        <div>
+            <Form />
+        </div>
     )
 }
 
