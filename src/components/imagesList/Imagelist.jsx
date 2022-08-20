@@ -3,8 +3,10 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import TestProfile from "../../img/profile.jpg"
-
+import TestProfile from "../../img/profile.jpg";
+import { Avatar, Tooltip, Typography } from "@mui/material";
+import moment from "moment";
+import Options from './Options';
 
 function srcset(image, size, rows = 1, cols = 1) {
     // if an image takes two rows and two colums, multiply this by size to give corrext size
@@ -28,7 +30,6 @@ export default function QuiltedImageList() {
     const [toZoom, setToZoom] = React.useState(false)
     if(isOpen && !toZoom){
         const zoom = document.getElementsByClassName("ril-zoom-in")
-        console.log(zoom[0])
         setTimeout(()=>{
             zoom[0].click()
             setToZoom(true)
@@ -49,7 +50,8 @@ export default function QuiltedImageList() {
                             transition:'opacity .3s linear',
                             '&:hover':{opacity: 1}
                         }}
-                    > 
+                    >   
+                        <Options />
                         <img
                             {...srcset(
                                 item.img, 
@@ -65,6 +67,34 @@ export default function QuiltedImageList() {
                                 setToZoom(false)
                             }}
                         />
+                        <Typography
+                            variant="body2"
+                            component ="span"
+                            sx={{
+                                position: "absolute",
+                                bottom: 0,
+                                left:0,
+                                color:"white",
+                                background :"rgba(0,0,0,.3)",
+                                p:"5px",
+                                borderTopRightRadius: 8,
+                            }}
+                        >
+                            {moment(new Date() - 500 * 60 * 60).fromNow()}
+                        </Typography>
+                        <Tooltip
+                            title = "Wolankoda"
+                            sx={{
+                                position:'absolute',
+                                bottom:'3px',
+                                right: '3px'
+                            }}
+                        >
+                            <Avatar
+                                src = {TestProfile}
+                                imgProps={{'aria-hidden':true}}
+                            />
+                        </Tooltip>
                     </ImageListItem>
                 ))}
             </ImageList>
