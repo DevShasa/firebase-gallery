@@ -25,7 +25,7 @@ export default function QuiltedImageList() {
 
     // fix an issue where lightbox does not show first image...
     // however when zoom button is clicked the image shows 
-    // so when user clicks on an image we wait two seconds then click the button for the user
+    // so when user clicks on an image wait two seconds then automaticaly click the zoom button
     // to prevent zooming other images we use a flag toZoom, to make sure zoom only activated on first image
     const [toZoom, setToZoom] = React.useState(false)
     if(isOpen && !toZoom){
