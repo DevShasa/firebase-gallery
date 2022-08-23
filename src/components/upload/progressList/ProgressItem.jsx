@@ -10,6 +10,7 @@ const ProgressItem = ({file}) => {
     // take an image and upload it while displaying the progress
     const [progress, setProgress] = useState(0)
     const [ imageUrl, setImageUrl ] = useState(null)
+    const currentUser = {uid: 'userId'}
 
     async function uploadImage(file){
         // .pop() removes the last element in the array and returns it
@@ -19,20 +20,23 @@ const ProgressItem = ({file}) => {
         try{
             const url = await uploadFileProgress(
                 file,
-                'gallery',
+                `gallery/${currentUser.uid}`,
                 imageName,
                 setProgress
             )
             // Create a new document with the url
             const galleryDoc = {
                 imageURL: url,
-                fileName: imageName
+                userID: currentUser.uid,
+                userEmail: 'test@email.com',
+                userName: 'Wolan Shatade',
+                userPhoto: ''
             }
             await addDocument('gallery', galleryDoc, imageName)
             setImageUrl(null)
         }catch(error){
             console.log(error)
-        }
+        } 
     }
 
     useEffect(()=>{
@@ -43,7 +47,7 @@ const ProgressItem = ({file}) => {
 
 
     return (
-        <ImageListItem cols={1} rows={1} sx={{overflow:'hidden'}}>
+        imageUrl && (<ImageListItem cols={1} rows={1} sx={{overflow:'hidden'}}>
             <img 
                 src={imageUrl}
                 alt="progress"
@@ -55,7 +59,7 @@ const ProgressItem = ({file}) => {
                     : (<CheckCircleOutline sx={{width: 60, height:60, color:'lightGreen'}} />) }
             </Box>
 
-        </ImageListItem>
+        </ImageListItem>)
     )
 }
 

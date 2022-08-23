@@ -9,7 +9,7 @@ const uploadFileProgress = (file, subFolder, imageName, setProgress) =>{
 
         upload.on(
             // on state change
-            'state_changed',
+            'state_change',
             // grab snapshopt to get progress and update snapshot hook
             (snapshot)=>{
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
