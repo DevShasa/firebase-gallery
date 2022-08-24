@@ -7,9 +7,10 @@ import TestProfile from "../../img/profile.jpg";
 import { Avatar, Tooltip, Typography } from "@mui/material";
 import moment from "moment";
 import Options from './Options';
+import useFirestore from '../../firebase/useFirestore';
 
 function srcset(image, size, rows = 1, cols = 1) {
-    // if an image takes two rows and two colums, multiply this by size to give corrext size
+    // if an image takes two rows and two colums, multiply this by size to give correct size
     return {
         src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
         srcSet: `${image}?w=${size * cols}&h=${
@@ -20,6 +21,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 
 export default function QuiltedImageList() {
 
+    const { documents } = useFirestore("gallery")
     const [ isOpen, setIsOpen ] = React.useState(false)
     const [ photoIndex, setPhotoIndex ] = React.useState(0)
 
@@ -39,9 +41,9 @@ export default function QuiltedImageList() {
     return (
         <>
             <ImageList variant="quilted" cols={4} rowHeight={200} sx={{mt:"1rem"}}>
-                {itemData.map((item, index) => (
+                {documents.map((item, index) => (
                     <ImageListItem 
-                        key={item.title} 
+                        key={item?.id} 
                         cols={pattern[index - Math.floor(index/pattern.length)*pattern.length].cols} 
                         rows={pattern[index - Math.floor(index/pattern.length)*pattern.length].rows}
                         sx={{
@@ -51,15 +53,19 @@ export default function QuiltedImageList() {
                             '&:hover':{opacity: 1}
                         }}
                     >   
-                        <Options />
+                        <Options 
+                            imageId = {item?.id}
+                            imageURL = {item?.data?.imageURL}
+                            userId = {item?.data?.userID}
+                        />
                         <img
                             {...srcset(
-                                item.img, 
+                                item?.data?.imageURL, 
                                 200, 
                                 pattern[index - Math.floor(index/pattern.length)*pattern.length].rows, 
                                 pattern[index - Math.floor(index/pattern.length)*pattern.length].cols 
                             )}
-                            alt={item.title}
+                            alt={ item?.data?.userName || item?.data?.userEmail}
                             loading="lazy"
                             onClick = {()=>{
                                 setPhotoIndex(index);
@@ -80,10 +86,10 @@ export default function QuiltedImageList() {
                                 borderTopRightRadius: 8,
                             }}
                         >
-                            {moment(new Date() - 500 * 60 * 60).fromNow()}
+                            {moment(item?.data?.timestamp?.toDate()).fromNow()}
                         </Typography>
                         <Tooltip
-                            title = "Wolankoda"
+                            title = {item?.data?.userName || item?.data?.userEmail}
                             sx={{
                                 position:'absolute',
                                 bottom:'3px',
@@ -91,7 +97,7 @@ export default function QuiltedImageList() {
                             }}
                         >
                             <Avatar
-                                src = {TestProfile}
+                                src = {item?.data?.userName || item?.data?.userEmail}
                                 imgProps={{'aria-hidden':true}}
                             />
                         </Tooltip>
@@ -100,13 +106,13 @@ export default function QuiltedImageList() {
             </ImageList>
             {isOpen && (
                 <Lightbox 
-                    mainSrc = {itemData[photoIndex].img}
-                    nextSrc = {itemData[(photoIndex + 1)%itemData.length].img}
-                    prevSrc = {itemData[(photoIndex + itemData.length -1)% itemData.length].img}
+                    mainSrc = {documents[photoIndex]?.data?.imageURL}
+                    nextSrc = {documents[(photoIndex + 1)%documents.length]?.data?.imageURL}
+                    prevSrc = {documents[(photoIndex + documents.length -1)% documents.length]?.data?.imageURL}
                     onCloseRequest = {()=>setIsOpen(false)}
-                    onMoveNextRequest = {()=>setPhotoIndex((photoIndex + 1)%itemData.length)}
-                    onMovePrevRequest = {()=>setPhotoIndex((photoIndex + itemData.length -1)% itemData.length)}
-                    imageTitle = {itemData[photoIndex].title}
+                    onMoveNextRequest = {()=>setPhotoIndex((photoIndex + 1)%documents.length)}
+                    onMovePrevRequest = {()=>setPhotoIndex((photoIndex + documents.length -1)% documents.length)}
+                    imageTitle = {documents[photoIndex]?.data?.userEmail}
                     imageCaption = "Wolankoda"
                 />
             )}
@@ -146,61 +152,5 @@ const pattern = [
 	{
 		rows: 1,
 		cols: 1,
-	},
-];
-
-const itemData = [
-    {
-        img: TestProfile,
-        title: "Picha Yangu"
-    },
-	{
-		img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-		title: "Breakfast",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-		title: "Burger",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-		title: "Camera",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-		title: "Coffee",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-		title: "Hats",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-		title: "Honey",
-		author: "@arwinneil",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-		title: "Basketball",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-		title: "Fern",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-		title: "Mushrooms",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-		title: "Tomato basil",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-		title: "Sea star",
-	},
-	{
-		img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-		title: "Bike",
 	},
 ];
