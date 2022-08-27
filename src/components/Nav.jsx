@@ -13,16 +13,12 @@ import Settings from '@mui/icons-material/Settings';
 import Lock from '@mui/icons-material/Lock';
 import Logout from '@mui/icons-material/Logout';
 import {Button} from '@mui/material';
-
-import ProfileImg from "../img/profile.jpg";
+import { useAuth } from '../context/authContext';
+import Login from "./user/Login";
 
 export default function Nav() {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [currentUser, setCurrentUser] = React.useState({
-        email: 'test@email.com',
-        displayName: 'Jane',
-        photoUrl: ProfileImg
-    })
+    const [anchorEl, setAnchorEl] = React.useState(null); 
+    const { currentUser, setModal } = useAuth()
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -31,11 +27,26 @@ export default function Nav() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const openLogin = ()=>{
+        setModal({
+            isOpen: true,
+            title:'Login',
+            content: <Login />
+        })
+    }
+
     return (
         <React.Fragment>
         <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
             {!currentUser ?(
-                <Button startIcon={<Lock />} variant="outlined">Login</Button>
+                <Button 
+                    startIcon={<Lock />} 
+                    variant="outlined"
+                    onClick = {openLogin}
+                    >
+                        Login
+                </Button>
             ):(
                 <Tooltip title="Account settings">
                     <IconButton

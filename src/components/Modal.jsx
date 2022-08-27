@@ -17,7 +17,7 @@ const Modal = () => {
                 setAlert({...alert, isAlert: false})
             }
         }
-    },[modal?.isOpen])
+    },[modal?.isOpen]) // eslint-disable-line 
 
     return (
         <Dialog open={modal.isOpen} onClose={closeModal}>
@@ -30,7 +30,7 @@ const Modal = () => {
                         position: 'absolute',
                         top: 0,
                         right: 0,
-                        color: (theme) => theme.palete.grey[500],
+                        color: (theme) => theme.palette.grey[500],
                     }}
                 >
                     <Close />
