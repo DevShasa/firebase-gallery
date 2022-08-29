@@ -1,3 +1,7 @@
+/**
+ * Upload a file to firebase storage, return progress
+ */
+
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { storage } from './config';
 
@@ -10,7 +14,7 @@ const uploadFileProgress = (file, subFolder, imageName, setProgress) =>{
         upload.on(
             // on state change
             'state_change',
-            // grab snapshopt to get progress and update snapshot hook
+            // grab snapshot to get progress and update snapshot hook
             (snapshot)=>{
                 const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 setProgress(progress)

@@ -42,7 +42,7 @@ const ProgressItem = ({file}) => {
     useEffect(()=>{
         setImageUrl(URL.createObjectURL(file))
         uploadImage(file)
-    },[file])
+    },[file]) // eslint-disable-line 
 
 
 

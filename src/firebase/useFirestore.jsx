@@ -1,3 +1,7 @@
+/**
+ * Create a snapshot of image collection that updates whenever collection changes
+ */
+
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import { db } from "./config";

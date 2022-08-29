@@ -1,3 +1,7 @@
+/**
+ * Display an alert when alert parameter is true
+ */
+
 import { useEffect, useRef } from 'react';
 import { useAuth } from '../context/authContext;'
 import Close from "@mui/icons-material/Close";
@@ -9,19 +13,44 @@ const Notify = () => {
     const alertRef = useRef()
 
     useEffect(()=>{
-        // Ensure smooth scrooling behaviour when component is mounted
+        // Ensure smooth scroling behaviour when component is mounted
         alertRef.current.scrollIntoView({
             behavior: 'smooth',
             block: 'end',
             inline: 'nearest'
         })
 
+        let timer;
+        if(alert.timeout){
+            timer = setTimeout(()=>{
+                setAlert({...alert, isAlert: false})
+            }, alert.timeout)
+        }
+
+        return clearTimeout(timer)
         
-    },[])
+    },[alert.timeout]) // eslint-disable-line 
 
     return (
-        <div>Notify</div>
-    )
-}
+        <Box sx={{mb: 2}} ref={alertRef}>
+            <Collapse in={alert.isAlert}>
+                <Alert
+                    severity ={alert.severity}
+                    action={
+                        <IconButton
+                            aria-label="Close"
+                            size="small"
+                            onClick={()=>setAlert({...alert, isAlert:false})}
+                        >
+                            <Close fontSize="small"/>
+                        </IconButton> 
+                    }
+                >
+                    {alert.message}
+                </Alert>
+            </Collapse>
+        </Box>
+    );
+};
 
 export default Notify

@@ -1,3 +1,7 @@
+/**
+ * Delete a document from a collection
+ */
+
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "./config";
 

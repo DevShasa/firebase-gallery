@@ -1,3 +1,7 @@
+/**
+ * create a new document in a collection
+ */
+
 import { 
     // collection, 
     doc, 
