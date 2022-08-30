@@ -6,7 +6,7 @@ import Notify from "./Notify";
 import { useAuth } from "../context/authContext";
 
 const MainNotification = ()=>{
-    const {alert:location} = useAuth();
+    const {alert:{location}} = useAuth();
     return location === "main" && <Notify />
 }
 

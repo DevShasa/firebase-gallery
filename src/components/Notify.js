@@ -27,7 +27,7 @@ const Notify = () => {
             }, alert.timeout)
         }
 
-        return clearTimeout(timer)
+        return () => clearTimeout(timer)
         
     },[alert.timeout]) // eslint-disable-line 
 

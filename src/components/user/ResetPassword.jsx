@@ -8,6 +8,19 @@ const ResetPassword = () => {
     const { setLoading, setAlert, setModal, modal, resetPassword, } = useAuth()
     
     const emailRef = useRef()
+
+    // function testAlert(e){
+    //     e.preventDefault();
+    //     setModal({...modal, isOpen: false}) 
+    //     setAlert({  
+    //         isAlert: true,
+    //         severity: "success",
+    //         message: "Reset link has been sent to your email",
+    //         timeout: 8000,
+    //         location: 'main'
+    //     })
+    // }
+
     const handleSubmit = async(e)=>{
         e.preventDefault();
         setLoading(true);
