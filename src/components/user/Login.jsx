@@ -17,12 +17,61 @@ const Login = () => {
 
     const [ isRegister, setIsRegister ] = useState(false)
 
-    const handleSubmit = ()=>{
+    const handleSubmit = async(e)=>{
+        e.preventDefault();
+        setLoading(true)
 
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
+        if(isRegister){
+            // the user is registering a new account
+            const confirmPassword = confirmPasswordRef.current.value;
+            try{
+                if(confirmPassword!== password){throw new Error("Passwords do not match")}
+                
+                await signUp(email, password)
+                setModal({...modal, isOpen: false})
+            }catch(error){
+                setAlert({
+                    isAlert: true,
+                    severity: "error",
+                    message: error.message,
+                    timeout: 5000,
+                    location: "modal"
+                })
+            }
+        }else{
+            // user is loggin in
+            try{
+                await login(emailRef, password);
+                setModal({...modal, isOpen:false})
+            }catch(error){
+                setAlert({
+                    isAlert: true,
+                    severity: "error",
+                    message: error.message,
+                    timeout: 5000,
+                    location: "modal"
+                })
+                console.log("A LOGIN ERROR HAS OCCURED---->",error)
+            }
+        }
     }
 
-    const handleGoogleLogin = ()=>{
-
+    const handleGoogleLogin = async()=>{
+        try{
+            await loginWithGoogle();
+            setModal({...modal, isOpen:false})
+        }catch(error){
+            setAlert({
+                isAlert: true,
+                severity: "error",
+                message: error.message,
+                timeout: 5000,
+                location: "modal"
+            })
+            console.log("A LOGIN ERROR HAS OCCURED---->",error)
+        }
     }
 
     return (
@@ -58,7 +107,7 @@ const Login = () => {
                         : "Don't have an account?"
                     }
                     <Button onClick={()=>setIsRegister(!isRegister)}>
-                        {isRegister ? "Register" : "Login"}
+                        {isRegister ? "Login" : "Register"}
                     </Button>
                 </DialogActions>
                 {/* log in with google one click */}

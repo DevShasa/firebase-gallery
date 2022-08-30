@@ -55,6 +55,7 @@ const AuthContext = ({children}) => {
     }
 
     useEffect(()=>{
+        // observer whether user is loggedin or not
         const unsubscribe = onAuthStateChanged(auth, (user)=>{
             setCurrentUser(user);
             console.log("USER STATUS HAS CHANGED: ", user);
