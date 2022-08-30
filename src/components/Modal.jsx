@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { Dialog, DialogTitle, IconButton }  from '@mui/material';
 import { useAuth } from "../context/authContext";
 import { Close } from "@mui/icons-material";
+import Notify from './Notify';
+
 
 const Modal = () => {
     // get data from context
@@ -37,6 +39,7 @@ const Modal = () => {
                 </IconButton>
             </DialogTitle>
             {modal.content}
+            {alert.location === "modal" && <Notify />}
         </Dialog>
     );
 };

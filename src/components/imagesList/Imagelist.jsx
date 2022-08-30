@@ -3,7 +3,7 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import TestProfile from "../../img/profile.jpg";
+//import TestProfile from "../../img/profile.jpg";
 import { Avatar, Tooltip, Typography } from "@mui/material";
 import moment from "moment";
 import Options from './Options';

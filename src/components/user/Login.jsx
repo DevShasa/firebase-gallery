@@ -5,6 +5,7 @@ import EmailFIeld from './inputs/EmailFIeld';
 import PasswordField from './inputs/PasswordField';
 import { useAuth } from '../../context/authContext';
 import SubmitButton from './inputs/SubmitButton';
+import ResetPassword from "./ResetPassword";
 
 const Login = () => {
 
@@ -44,7 +45,7 @@ const Login = () => {
                 </DialogContent>
                 <DialogActions sx={{ justifyContent:'space-between', px:"19px" }}>
                     <Button size="small" onClick={()=>{
-                        setModal({...modal, title: "Reset Password", content: "resetComponent"})
+                        setModal({...modal, title: "Reset Password", content: <ResetPassword />})
                     }}>
                         Forgot Password
                     </Button>

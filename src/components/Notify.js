@@ -3,7 +3,7 @@
  */
 
 import { useEffect, useRef } from 'react';
-import { useAuth } from '../context/authContext;'
+import { useAuth } from "../context/authContext";
 import Close from "@mui/icons-material/Close";
 import { Alert, Box, Collapse, IconButton } from "@mui/material";
 
@@ -33,7 +33,7 @@ const Notify = () => {
 
     return (
         <Box sx={{mb: 2}} ref={alertRef}>
-            <Collapse in={alert.isAlert}>
+            <Collapse in={alert.isAlert}> 
                 <Alert
                     severity ={alert.severity}
                     action={
