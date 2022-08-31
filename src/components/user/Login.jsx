@@ -45,7 +45,6 @@ const Login = () => {
             try{
                 await login(email, password);
                 setModal({...modal, isOpen:false})
-                window.location.reload()
             }catch(error){
                 setAlert({
                     isAlert: true,
