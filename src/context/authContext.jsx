@@ -61,7 +61,7 @@ const AuthContext = ({children}) => {
             console.log("USER STATUS HAS CHANGED: ", user);
         })
 
-        return unsubscribe()
+        return unsubscribe
     },[])
 
     // provide the values and functions

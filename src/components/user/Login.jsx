@@ -40,11 +40,12 @@ const Login = () => {
                     location: "modal"
                 })
             }
-        }else{
+        }else{    
             // user is loggin in
             try{
-                await login(emailRef, password);
+                await login(email, password);
                 setModal({...modal, isOpen:false})
+                window.location.reload()
             }catch(error){
                 setAlert({
                     isAlert: true,
@@ -73,6 +74,14 @@ const Login = () => {
             console.log("A LOGIN ERROR HAS OCCURED---->",error)
         }
     }
+
+    useEffect(()=>{
+        if(isRegister){
+            setModal({...modal, title:'Register'})
+        }else{
+            setModal({...modal, title:'Login'})
+        }
+    },[isRegister]) // eslint-disable-line
 
     return (
         <>

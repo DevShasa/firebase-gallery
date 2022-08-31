@@ -18,7 +18,7 @@ import Login from "./user/Login";
 
 export default function Nav() {
     const [anchorEl, setAnchorEl] = React.useState(null); 
-    const { currentUser, setModal } = useAuth()
+    const { currentUser, setModal, logout, setAlert } = useAuth()
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -34,6 +34,21 @@ export default function Nav() {
             title:'Login',
             content: <Login />
         })
+    }
+
+    const handleLogout = async()=>{
+        try{
+            await logout(); // logout whatever user is in auth
+            window.location.reload()
+        }catch(error){
+            setAlert({
+                isAlert:'true',
+                severity: 'error',
+                message: error.message,
+                timeout: 8000,
+                location:"main"
+            })
+        }
     }
 
     return (
@@ -57,7 +72,7 @@ export default function Nav() {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     >
-                    <Avatar sx={{ width: 60, height: 60, fontSize: '2rem' }} src={currentUser?.photoUrl}>
+                    <Avatar sx={{ width: 60, height: 60, fontSize: '2rem' }} src={currentUser?.photoURL}>
                         {currentUser?.displayName?.charAt(0).toUpperCase() || currentUser?.email?.charAt(0).toUpperCase()}
                     </Avatar>
                     </IconButton>
@@ -109,11 +124,9 @@ export default function Nav() {
             </ListItemIcon>
             Settings
             </MenuItem>
-            <MenuItem>
-            <ListItemIcon>
-                <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
+            <MenuItem onClick={handleLogout}>
+                <ListItemIcon> <Logout fontSize="small" /></ListItemIcon>
+                Logout
             </MenuItem>
         </Menu>
         </React.Fragment>
