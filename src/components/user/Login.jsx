@@ -125,7 +125,7 @@ const Login = () => {
                         onClick = {handleGoogleLogin}
                         variant="outlined"
                     >
-                        Log in with GOogle
+                        Log in with Google
                     </Button>
                 </DialogActions>
             </form>
