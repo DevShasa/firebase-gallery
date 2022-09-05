@@ -39,7 +39,6 @@ export default function Nav() {
     const handleLogout = async()=>{
         try{
             await logout(); // logout whatever user is in auth
-            window.location.reload()
         }catch(error){
             setAlert({
                 isAlert:'true',
@@ -119,10 +118,8 @@ export default function Nav() {
             </MenuItem>
             <Divider />
             <MenuItem>
-            <ListItemIcon>
-                <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
+                <ListItemIcon> <Settings fontSize="small" /></ListItemIcon>
+                Settings
             </MenuItem>
             <MenuItem onClick={handleLogout}>
                 <ListItemIcon> <Logout fontSize="small" /></ListItemIcon>
