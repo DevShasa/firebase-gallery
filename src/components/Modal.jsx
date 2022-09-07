@@ -14,6 +14,7 @@ const Modal = () => {
     }
 
     useEffect(()=>{
+        // turn off alert if it happens to be on when modal is off
         if(modal.isOpen === false){
             if(alert.isAlert && alert.location === "modal" ){
                 setAlert({...alert, isAlert: false})

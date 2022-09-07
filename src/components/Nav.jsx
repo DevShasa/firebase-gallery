@@ -71,7 +71,13 @@ export default function Nav() {
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     >
-                    <Avatar sx={{ width: 60, height: 60, fontSize: '2rem' }} src={currentUser?.photoURL}>
+                    <Avatar 
+                        sx={{ width: 60, height: 60, fontSize: '2rem' }} 
+                        src={currentUser?.photoURL} 
+                        imgProps = {{
+                            referrerPolicy:"no-referrer"
+                        }}
+                    >
                         {currentUser?.displayName?.charAt(0).toUpperCase() || currentUser?.email?.charAt(0).toUpperCase()}
                     </Avatar>
                     </IconButton>

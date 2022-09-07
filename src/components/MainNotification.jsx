@@ -1,4 +1,4 @@
-/**
+ /**
  * This will display if alert location === "main"
  */
 
