@@ -5,11 +5,13 @@ import { Container } from "@mui/material";
 import AuthContext from "./context/authContext";
 import Modal from "./components/Modal";
 import MainNotification from "./components/MainNotification";
+import Loading from "./components/Loading";
 
 function App() {
   return (
     <Container maxWidth="lg" sx={{textAlign: 'center', mt: '3rem'}}>
         <AuthContext>
+            <Loading />
             <Modal />
             <MainNotification /> 
             <Nav/>

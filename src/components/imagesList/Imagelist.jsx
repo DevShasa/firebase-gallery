@@ -89,7 +89,7 @@ export default function QuiltedImageList() {
                             {moment(item?.data?.timestamp?.toDate()).fromNow()}
                         </Typography>
                         <Tooltip
-                            title = {item?.data?.userName || item?.data?.userEmail}
+                            title = {item?.data?.userName || item?.data?.userEmail.split("@")[0]}
                             sx={{
                                 position:'absolute',
                                 bottom:'3px',
@@ -97,7 +97,7 @@ export default function QuiltedImageList() {
                             }}
                         >
                             <Avatar
-                                src = {item?.data?.userName || item?.data?.userEmail}
+                                src = {item?.data?.userName || item?.data?.userEmail.split("@")[0]}
                                 imgProps={{'aria-hidden':true}}
                             />
                         </Tooltip>

@@ -33,7 +33,7 @@ const useFirestore = (collectionName="gallery") => {
     
     return () => unsubscribe(); // stop listening to changes 
 
-    },[collectionName])
+    },[collectionName]) // eslint-disable-line
 
     return {documents}
 }

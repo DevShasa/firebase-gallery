@@ -56,7 +56,8 @@ const Login = () => {
                 console.log("A LOGIN ERROR HAS OCCURED---->",error)
             }
         }
-    }
+        setLoading(false);
+    };
 
     const handleGoogleLogin = async()=>{
         try{

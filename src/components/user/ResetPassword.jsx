@@ -32,6 +32,7 @@ const ResetPassword = () => {
 
             })
         }
+        setLoading(false);
     }
 
     return (
