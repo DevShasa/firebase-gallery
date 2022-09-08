@@ -5,8 +5,10 @@
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, orderBy, query} from "firebase/firestore";
 import { db } from "./config";
+import { useAuth } from "../context/authContext";
 
 const useFirestore = (collectionName="gallery") => {
+    const { setAlert } = useAuth();
     const [ documents, setDocuments ] = useState([])
 
     useEffect(()=>{
@@ -18,9 +20,16 @@ const useFirestore = (collectionName="gallery") => {
                 setDocuments(docs)
             })},
             (error)=>{
-                console.log(error)
+                setAlert({
+                    isAlert: true,
+                    severity: "error",
+                    message: error.message,
+                    timeout: 9000,
+                    location: "main"
+                })
+                console.log(error);
             }
-        )
+        );
     
     return () => unsubscribe(); // stop listening to changes 
 
