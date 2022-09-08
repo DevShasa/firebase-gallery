@@ -5,12 +5,15 @@ import { CircularProgresBar } from "./CircularProgresBar";
 import uploadFileProgress from "../../../firebase/uploadFileProgress";
 import { v4 as uuidv4 } from 'uuid';
 import addDocument from "../../../firebase/addDocument";
-
+import { useAuth } from "../../../context/authContext";
 const ProgressItem = ({file}) => {
+
+    const { setAlert, currentUser } = useAuth();
+
     // take an image and upload it while displaying the progress
     const [progress, setProgress] = useState(0)
     const [ imageUrl, setImageUrl ] = useState(null)
-    const currentUser = {uid: 'userId'}
+    // const currentUser = {uid: 'userId'}
 
     async function uploadImage(file){
         // .pop() removes the last element in the array and returns it
@@ -20,17 +23,17 @@ const ProgressItem = ({file}) => {
         try{
             const url = await uploadFileProgress(
                 file,
-                `gallery/${currentUser.uid}`,
+                `gallery/${currentUser?.uid}`,
                 imageName,
                 setProgress
             )
             // Create a new document with the url
             const galleryDoc = {
                 imageURL: url,
-                userID: currentUser.uid,
-                userEmail: 'test@email.com',
-                userName: 'Wolan Shatade',
-                userPhoto: ''
+                userID: currentUser?.uid || '',
+                userEmail: currentUser?.email || '',
+                userName: currentUser?.displayName || '',
+                userPhoto: currentUser?.photoURL || ''
             }
             await addDocument('gallery', galleryDoc, imageName)
             setImageUrl(null)
