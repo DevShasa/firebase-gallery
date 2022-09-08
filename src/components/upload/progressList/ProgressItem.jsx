@@ -38,7 +38,14 @@ const ProgressItem = ({file}) => {
             await addDocument('gallery', galleryDoc, imageName)
             setImageUrl(null)
         }catch(error){
-            console.log(error)
+            setAlert({
+                isAlert: true,
+                severity: 'error',
+                message: error.message,
+                timeout: 8000,
+                location: 'main'
+            })
+            console.log("ERROR UPLOADING IMAGE--->", error)
         } 
     }
 
@@ -50,19 +57,22 @@ const ProgressItem = ({file}) => {
 
 
     return (
-        imageUrl && (<ImageListItem cols={1} rows={1} sx={{overflow:'hidden'}}>
-            <img 
-                src={imageUrl}
-                alt="progress"
-                loading = "lazy"
-            /> 
-            <Box sx = {backdrop}>
-                { progress < 100 
-                    ? (<CircularProgresBar value={progress} />) 
-                    : (<CheckCircleOutline sx={{width: 60, height:60, color:'lightGreen'}} />) }
-            </Box>
+        imageUrl && (
+            <ImageListItem cols={1} rows={1} sx={{overflow:'hidden'}}>
+                <img 
+                    src={imageUrl}
+                    alt="progress"
+                    loading = "lazy"
+                /> 
 
-        </ImageListItem>)
+                {/* image overlay */}
+                <Box sx = {backdrop}>
+                    { progress < 100 
+                        ? (<CircularProgresBar value={progress} />) 
+                        : (<CheckCircleOutline sx={{width: 60, height:60, color:'lightGreen'}} />) }
+                </Box>
+            </ImageListItem>
+        )
     )
 }
 
