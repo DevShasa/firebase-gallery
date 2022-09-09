@@ -15,6 +15,7 @@ import Logout from '@mui/icons-material/Logout';
 import {Button} from '@mui/material';
 import { useAuth } from '../context/authContext';
 import Login from "./user/Login";
+import Profile from "./user/Profile";
 
 export default function Nav() {
     const [anchorEl, setAnchorEl] = React.useState(null); 
@@ -106,7 +107,7 @@ export default function Nav() {
                 content: '""',
                 display: 'block',
                 position: 'absolute',
-                top: 0,
+                top: 2,
                 right: 14,
                 width: 10,
                 height: 10,
@@ -119,8 +120,12 @@ export default function Nav() {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-            <MenuItem>
-            <Avatar /> Profile
+            <MenuItem onClick={()=> setModal({
+                isOpen: true,
+                title: "Profile Settings",
+                content: <Profile />
+            })}>
+                <Avatar src={currentUser?.photoURL}/> Profile
             </MenuItem>
             <Divider />
             <MenuItem>
