@@ -13,23 +13,77 @@ import { Crop } from "@mui/icons-material";
 import { useAuth } from '../../context/authContext';
 import SubmitButton from "./inputs/SubmitButton";
 import { v4 as uuidv4} from 'uuid';
+import uploadFile from '../../firebase/uploadFile';
+import { updateProfile } from 'firebase/auth';
+import deleteFile from '../../firebase/deleteStoredFile';
 
 const Profile = () => {
-    const { currentUser } = useAuth()
+    const { currentUser,  setLoading, setAlert} = useAuth()
     const [ name, setName ] = useState(currentUser?.displayName)
     const [ photoURL, setPhotoURL ] = useState(currentUser?.photoURL)
     const [ file, setFile ] = useState(null)
 
-    const handleSubmit = () =>{
+    const handleSubmit = async (e) =>{
+        // submit details to backend
+        e.preventDefault()
+        setLoading(true)
 
+        let userObject = { displayName: name }
+        let imageObject = { userName: name }
+
+        try{
+            if(file){
+                const imageName = uuidv4() + "." +file?.name?.split(".").pop();
+                const url = await uploadFile(file, `profile/${currentUser?.uid}/${imageName}`)
+                
+                // delete previous profile image of the user
+                if(currentUser?.photoURL){
+                    const previousImage = currentUser?.photoURL?.split(`${currentUser?.uid}%2F`)[1].split("?")[0]
+                    if(previousImage){
+                        try{
+                            await deleteFile(`profile/${currentUser?.uid}/${previousImage}`)
+                        }catch(error){
+                            console.log("ERROR WHEN DELETING PREVIOUS IMAGE--->", error)
+                        }
+                    }
+                }
+                
+                userObject = {...userObject, photoURL: url}
+                imageObject ={ ...imageObject, userPhoto: url}
+            }
+            
+            // update with new profile image
+            await updateProfile(currentUser, userObject)
+            
+            //update gallery image documents that are associated with this user
+
+            setAlert({
+                isAlert: true,
+                severity:"success",
+                message: "Your profile has been updated",
+                timeout: 3000,
+                location: "modal"
+            })
+        }catch(error){
+            setAlert({
+                isAlert: true,
+                severity:"error",
+                message: error.message,
+                timeout: 5000,
+                location: "modal"
+            })
+            console.log("ERROR UPDATING USER DETAILS----->",error)
+        }
+
+        setLoading(false)
     }
 
     const handlechange = (e) =>{
         // change file when user clicks the input
-        const file = e.target.files[0]
-        if(file){
-            setFile(file)
-            setPhotoURL(URL.createObjectURL(file))
+        const profilePhoto = e.target.files[0]
+        if(profilePhoto){
+            setFile(profilePhoto)
+            setPhotoURL(URL.createObjectURL(profilePhoto))
             // setOpenCrop(true)
         }
     }
@@ -37,20 +91,17 @@ const Profile = () => {
     return (
         <form onSubmit = {handleSubmit}>
             <DialogContent dividers>
-                <DialogContentText>
+                <DialogContentText sx={{marginBottom: "10px"}}>
                     You can update your profile by updating these fields
                 </DialogContentText>
 
                 <Box sx={{display: 'flex', alignItems: "center"}}>
                     <Tooltip title="Click to change photo">
                         <label htmlFor='profilePhoto'>
-                                <input 
+                                <input id="profilePhoto"
                                     accept = 'image/*'
-                                    id="profilePhoto"
                                     type="file"
-                                    style = {{
-                                        display: 'none'
-                                    }}
+                                    style = {{display: 'none'}}
                                     onChange = {handlechange}
                                 />
                                 <Avatar src={photoURL} sx={{width: 75, height: 75, cursor:'pointer'}}/>
@@ -66,7 +117,7 @@ const Profile = () => {
                             minLength: 2
                         }}
                         fullWidth
-                        variant="standard"
+                        variant="outlined"
                         value={name || ""}
                         onChange = {(e)=> setName(e.target.value)}
                         label="Name"
