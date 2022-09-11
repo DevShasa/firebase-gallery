@@ -16,6 +16,7 @@ import { v4 as uuidv4} from 'uuid';
 import uploadFile from '../../firebase/uploadFile';
 import { updateProfile } from 'firebase/auth';
 import deleteFile from '../../firebase/deleteStoredFile';
+import updateUserRecords from '../../firebase/updateUserRecods';
 
 const Profile = () => {
     const { currentUser,  setLoading, setAlert} = useAuth()
@@ -56,6 +57,8 @@ const Profile = () => {
             await updateProfile(currentUser, userObject)
             
             //update gallery image documents that are associated with this user
+            // TODO use firebase functions istead of doing this client side
+            updateUserRecords('gallery', currentUser?.uid, imageObject)
 
             setAlert({
                 isAlert: true,

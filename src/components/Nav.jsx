@@ -16,6 +16,7 @@ import {Button} from '@mui/material';
 import { useAuth } from '../context/authContext';
 import Login from "./user/Login";
 import Profile from "./user/Profile";
+import AccountSettings from './user/userSettings/AccountSettings';
 
 export default function Nav() {
     const [anchorEl, setAnchorEl] = React.useState(null); 
@@ -128,7 +129,11 @@ export default function Nav() {
                 <Avatar src={currentUser?.photoURL}/> Profile
             </MenuItem>
             <Divider />
-            <MenuItem>
+            <MenuItem onClick = {()=>setModal({
+                isOpen: true, 
+                title: "Account Settings",
+                content: <AccountSettings />
+            })}>
                 <ListItemIcon> <Settings fontSize="small" /></ListItemIcon>
                 Settings
             </MenuItem>

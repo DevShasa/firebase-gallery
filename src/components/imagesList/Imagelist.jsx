@@ -97,9 +97,7 @@ export default function QuiltedImageList() {
                             }}
                         >
                             <Avatar
-                                src = {item?.data?.userName || item?.data?.userEmail}
-                                imgProps={{'aria-hidden':true}}
-                            />
+                                src = {item?.data?.userPhoto}imgProps={{'aria-hidden':true}} />
                         </Tooltip>
                     </ImageListItem>
                 ))}
