@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 
-const PasswordField = ({ passwordRef, id="password", label="Password", autoFocus="true" }) => {
+const PasswordField = ({ passwordRef, id="password", label="Password", autoFocus=true }) => {
 
     const [showPassword, setShowPassword] = useState(false)
 
