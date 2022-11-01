@@ -9,7 +9,6 @@ import { useAuth } from "../../../context/authContext";
 const ProgressItem = ({file}) => {
 
     const { setAlert, currentUser } = useAuth();
-
     // take an image and upload it while displaying the progress
     const [progress, setProgress] = useState(0)
     const [ imageUrl, setImageUrl ] = useState(null)
@@ -53,7 +52,6 @@ const ProgressItem = ({file}) => {
         setImageUrl(URL.createObjectURL(file))
         uploadImage(file)
     },[file]) // eslint-disable-line 
-
 
 
     return (
