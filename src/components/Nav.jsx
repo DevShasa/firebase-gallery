@@ -26,6 +26,7 @@ export default function Nav() {
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
@@ -93,7 +94,7 @@ export default function Nav() {
             onClose={handleClose}
             onClick={handleClose}
             PaperProps={{
-            elevation: 0,
+            elevation: 0, 
             sx: {
                 overflow: 'visible',
                 filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
