@@ -5,11 +5,9 @@ import {
     DialogActions, 
     DialogContent, 
     DialogContentText, 
-    IconButton, 
     TextField, 
     Tooltip
 } from '@mui/material'
-import { Crop } from "@mui/icons-material";
 import { useAuth } from '../../context/authContext';
 import SubmitButton from "./inputs/SubmitButton";
 import { v4 as uuidv4} from 'uuid';
@@ -29,8 +27,8 @@ const Profile = () => {
         e.preventDefault()
         setLoading(true)
 
-        let userObject = { displayName: name }
-        let imageObject = { userName: name }
+        let userObject = { displayName: name } // for updating user details 
+        let galleryImageUpdateObject = { userName: name } // for updating the images uploaded by user with new details
 
         try{
             if(file){
@@ -49,8 +47,9 @@ const Profile = () => {
                     }
                 }
                 
+                // add the new url to displayname, if no image then only name will be in object
                 userObject = {...userObject, photoURL: url}
-                imageObject ={ ...imageObject, userPhoto: url}
+                galleryImageUpdateObject ={ ...galleryImageUpdateObject, userPhoto: url}
             }
             
             // update with new profile image
@@ -58,7 +57,7 @@ const Profile = () => {
             
             //update gallery image documents that are associated with this user
             // TODO use firebase functions istead of doing this client side
-            updateUserRecords('gallery', currentUser?.uid, imageObject)
+            updateUserRecords('gallery', currentUser?.uid, galleryImageUpdateObject)
 
             setAlert({
                 isAlert: true,

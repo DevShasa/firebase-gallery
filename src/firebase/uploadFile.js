@@ -3,7 +3,7 @@ import { storage } from "./config";
 
 const uploadFile = (file, filePath) =>{
     return new Promise(async(resolve, reject)=>{
-        // create a reference to the storage
+        // create a ref to the storage
         const storageRef = ref(storage, filePath);
         try{
             // upload data to the ref

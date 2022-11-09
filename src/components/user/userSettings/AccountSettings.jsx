@@ -2,6 +2,8 @@ import { Button, DialogActions, DialogContent, DialogContentText }  from '@mui/m
 import { useAuth } from "../../../context/authContext"
 import { GoogleAuthProvider, reauthenticateWithPopup } from 'firebase/auth';
 import ChangeEmail from './ChangeEmail';
+import ReAuth from './ReAuth';
+
 
 const AccountSettings = () => {
 
@@ -16,7 +18,7 @@ const AccountSettings = () => {
             setModal({
                 ...modal,
                 title: "Re-Login",
-                content: "Re login"
+                content: <ReAuth {...{action}}/>
             })
         }else{
             // user logs in by clicking log in with google
