@@ -26,3 +26,4 @@ yarn-error.log*
 
 # ignore the file for now untill we hide the configdetails
 /src/firebase/config.js
+TODO.txt

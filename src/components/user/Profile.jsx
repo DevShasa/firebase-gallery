@@ -35,7 +35,7 @@ const Profile = () => {
                 const imageName = uuidv4() + "." +file?.name?.split(".").pop();
                 const url = await uploadFile(file, `profile/${currentUser?.uid}/${imageName}`)
                 
-                // delete previous profile image of the user
+                // delete previous profile image of the user before setting the new url
                 if(currentUser?.photoURL){
                     const previousImage = currentUser?.photoURL?.split(`${currentUser?.uid}%2F`)[1].split("?")[0]
                     if(previousImage){

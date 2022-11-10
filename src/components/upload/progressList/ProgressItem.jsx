@@ -34,6 +34,7 @@ const ProgressItem = ({file}) => {
                 userName: currentUser?.displayName || '',
                 userPhoto: currentUser?.photoURL || ''
             }
+            // imagename will become document.id
             await addDocument('gallery', galleryDoc, imageName)
             setImageUrl(null)
         }catch(error){
