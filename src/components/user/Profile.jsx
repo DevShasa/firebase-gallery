@@ -47,7 +47,7 @@ const Profile = () => {
                     }
                 }
                 
-                // add the new url to displayname, if no image then only name will be in object
+                // add new url to displayname, if no image then only name will be in object
                 userObject = {...userObject, photoURL: url}
                 galleryImageUpdateObject ={ ...galleryImageUpdateObject, userPhoto: url}
             }
