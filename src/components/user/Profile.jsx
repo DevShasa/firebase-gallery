@@ -55,7 +55,7 @@ const Profile = () => {
             // update with new profile image
             await updateProfile(currentUser, userObject)
             
-            //update gallery image documents that are associated with this user
+            // update gallery image documents that are associated with this user
             // TODO use firebase functions istead of doing this client side
             updateUserRecords('gallery', currentUser?.uid, galleryImageUpdateObject)
 
