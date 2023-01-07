@@ -48,7 +48,7 @@ export default function QuiltedImageList() {
                         rows={pattern[index - Math.floor(index/pattern.length)*pattern.length].rows}
                         sx={{
                             cursor:"pointer",
-                            opacity: ".7",
+                            opacity: ".8",
                             transition:'opacity .3s linear',
                             '&:hover':{opacity: 1}
                         }}
