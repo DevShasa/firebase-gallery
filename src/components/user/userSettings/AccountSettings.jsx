@@ -9,7 +9,7 @@ const AccountSettings = () => {
 
     const { currentUser,  setModal, modal, setAlert} = useAuth() 
 
-    // check whpo is the password provider 
+    // check who is the password provider 
     const logInViaPassword = currentUser?.providerData[0].providerId === "password"
 
     const handleAction = async(action) =>{
