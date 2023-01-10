@@ -46,6 +46,7 @@ const ChangePassword = () => {
           passwordRef={confirmPasswordRef}
           id="confirmPassword"
           label="Confirm Password"
+          autoFocus = {false}
         />
       </DialogContent>
       <DialogActions>
