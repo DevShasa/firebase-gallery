@@ -12,8 +12,8 @@ const deleteUserFiles = (collectionName, currentUser)=>{
         const q = query(collection(db, collectionName), where('userID', '==', currentUser.uid))
         try{
             const snapshot = await getDocs(q);
-            const galleryDocumentPromises = []
-            const photoStoragePromises = []
+            const galleryDocumentPromises = [] // for deleting the firestore gallery documents
+            const photoStoragePromises = [] // for deleting the images in storage
             snapshot.forEach((document)=>{
                 galleryDocumentPromises.push(deleteDocument(collectionName, document.id));
                 // document.id includes file extention so it is the name of the file

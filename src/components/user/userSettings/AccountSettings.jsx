@@ -3,7 +3,8 @@ import { useAuth } from "../../../context/authContext"
 import { GoogleAuthProvider, reauthenticateWithPopup } from 'firebase/auth';
 import ChangeEmail from './ChangeEmail';
 import ReAuth from './ReAuth';
-
+import DeleteAccount from './DeleteAccount';
+import { Delete } from '@mui/icons-material';
 
 const AccountSettings = () => {
 
@@ -29,7 +30,7 @@ const AccountSettings = () => {
                         setModal({ ...modal, title: "Update Email", content: <ChangeEmail />})
                         break
                         case 'deleteAccount':
-                            setModal({ ...modal, title: "Delete Account", content: "Delete Account"})
+                            setModal({ ...modal, title: "Delete Account", content: <DeleteAccount />})
                             break
                     default:
                         throw new Error("No Matching Action")
