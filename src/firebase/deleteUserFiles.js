@@ -23,7 +23,7 @@ const deleteUserFiles = (collectionName, currentUser)=>{
             await Promise.all(photoStoragePromises);
 
             if(currentUser?.photoURL){
-                const photoName = currentUser?.photoURL?.split(`${currentUser?.uid}%2F`)[1].split("?")[0]
+                const photoName = currentUser?.photoURL?.split(`${currentUser?.uid}%2F`)[1]?.split("?")[0]
                 if(photoName){
                     try{
                         await deleteFile(`profile/${currentUser.uid}/${photoName}`);

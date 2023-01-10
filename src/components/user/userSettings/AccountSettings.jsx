@@ -4,7 +4,6 @@ import { GoogleAuthProvider, reauthenticateWithPopup } from 'firebase/auth';
 import ChangeEmail from './ChangeEmail';
 import ReAuth from './ReAuth';
 import DeleteAccount from './DeleteAccount';
-import { Delete } from '@mui/icons-material';
 
 const AccountSettings = () => {
 
