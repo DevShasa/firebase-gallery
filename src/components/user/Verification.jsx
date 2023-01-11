@@ -57,7 +57,7 @@ const Verification = () => {
                         <Button  size="small" onClick={verify} disabled={isClicked} sx={{
                             lineHeight:'initial'
                         }}>
-                            Verify Now
+                            Verify Email Now 
                         </Button>
                     </Alert>
                 </Collapse>
