@@ -12,7 +12,7 @@ const ProgressList = ({files}) => {
         <ImageList rowHeight={200} cols={4} sx={{marginTop:"1rem"}}>
             {files.map((file, index)=>{
                 // only upload images, ignore other file types
-                console.log(file.type)
+                console.log("IMAGE UPLOADED IS",file.type)
                 return isFileAnImg(file) && <ProgressItem file={file} key={index} />
             })}
         </ImageList>

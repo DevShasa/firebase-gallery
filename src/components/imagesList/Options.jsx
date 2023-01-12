@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -38,36 +37,48 @@ export default function Options({imageId, imageURL, userId}) {
         }
     }
 
-    const handleDownload = () =>{
-        
+    const handleDownload = async() =>{
+        try{
+			const response = await fetch(imageURL, {mode:'no-cors'});
+			const data = await response.blob(); // get the blob which is the image object 
+			const blob = URL.createObjectURL(data); // create a url for the blob
+			const link = document.createElement("a");
+			link.href = blob;
+			link.download = imageId; // name of downloaded file
+			link.click(); // initiate the download
+			URL.revokeObjectURL(blob);
+			link.remove();
+
+		}catch(error){
+			setAlert({
+				isAlert: true,
+				severity: error,
+				message: error.message,
+				timeout: 8000,
+				location: "main",
+			})
+			console.log("ERROR DOWNLOADING IMAGE", error)
+		}
     }
     return (
 		<React.Fragment>
-			<Box
-				sx={{
-					display: "flex",
-					alignItems: "center",
-					textAlign: "center",
-				}}
-			>
-				<Tooltip title="Options">
-					<IconButton
-						onClick={handleClick}
-						sx={{
-							position: "absolute",
-							top: 0,
-							right: 0,
-							color: "white",
-							background: "rgba(0,0,0,.3)",
-						}}
-						aria-controls={open ? "account-menu" : undefined}
-						aria-haspopup="true"
-						aria-expanded={open ? "true" : undefined}
-					>
-						<MoreVert fontSize="large" />
-					</IconButton>
-				</Tooltip>
-			</Box>
+			<Tooltip title="Options">
+				<IconButton
+					onClick={handleClick}
+					sx={{
+						position: "absolute",
+						top: 0,
+						right: 0,
+						color: "white",
+						background: "rgba(0,0,0,.3)",
+					}}
+					aria-controls={open ? "account-menu" : undefined}
+					aria-haspopup="true"
+					aria-expanded={open ? "true" : undefined}
+				>
+					<MoreVert fontSize="large" />
+				</IconButton>
+			</Tooltip>
 			<Menu
 				anchorEl={anchorEl}
 				id="account-menu"

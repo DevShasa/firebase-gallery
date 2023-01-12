@@ -6,7 +6,7 @@ const Form = ({setFiles}) => {
 
     const fileRef = useRef()
     const handleClick = () =>{
-        fileRef.current.click()
+        fileRef.current.click() // click the input
     }
 
     const handleChange = (e)=>{
