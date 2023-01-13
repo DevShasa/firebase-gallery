@@ -46,6 +46,7 @@ const ProgressItem = ({file}) => {
                 location: 'main'
             })
             console.log("ERROR UPLOADING IMAGE--->", error)
+            setImageUrl(null)
         } 
     }
 

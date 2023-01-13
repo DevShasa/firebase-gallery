@@ -39,7 +39,7 @@ export default function Options({imageId, imageURL, userId}) {
 
     const handleDownload = async() =>{
         try{
-			const response = await fetch(imageURL, {mode:'no-cors'});
+			const response = await fetch(imageURL);
 			const data = await response.blob(); // get the blob which is the image object 
 			const blob = URL.createObjectURL(data); // create a url for the blob
 			const link = document.createElement("a");

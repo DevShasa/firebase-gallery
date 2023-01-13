@@ -22,6 +22,7 @@ function srcset(image, size, rows = 1, cols = 1) {
 export default function QuiltedImageList() {
 
     const { documents } = useFirestore("gallery")
+    console.log("gallery/images ----->", documents)
     const [ isOpen, setIsOpen ] = React.useState(false)
     const [ photoIndex, setPhotoIndex ] = React.useState(0)
 

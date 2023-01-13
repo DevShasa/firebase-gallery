@@ -1,12 +1,25 @@
 import {useRef} from 'react';
 import { Fab, Input } from "@mui/material";
 import Add from "@mui/icons-material/Add";
+import { useAuth } from "../../context/authContext";
+import Login from '../user/Login';
 
 const Form = ({setFiles}) => {
 
+    const { currentUser, setModal } = useAuth()
     const fileRef = useRef()
     const handleClick = () =>{
-        fileRef.current.click() // click the input
+        if(!currentUser){
+            setModal({
+                isOpen: true,
+                title:'Login',
+                content: <Login />
+            })
+        }else{
+            // trigger the input
+            fileRef.current.click() 
+        }
+        
     }
 
     const handleChange = (e)=>{
