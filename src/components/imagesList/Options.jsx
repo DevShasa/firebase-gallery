@@ -46,7 +46,7 @@ export default function Options({imageId, imageURL, userId}) {
 			link.href = blob;
 			link.download = imageId; // name of downloaded file
 			link.click(); // initiate the download
-			URL.revokeObjectURL(blob);
+			URL.revokeObjectURL(blob); // clear from memory
 			link.remove();
 
 		}catch(error){
