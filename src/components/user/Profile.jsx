@@ -5,6 +5,7 @@ import {
     DialogActions, 
     DialogContent, 
     DialogContentText, 
+    IconButton, 
     TextField, 
     Tooltip
 } from '@mui/material'
@@ -15,12 +16,17 @@ import uploadFile from '../../firebase/uploadFile';
 import { updateProfile } from 'firebase/auth';
 import deleteFile from '../../firebase/deleteStoredFile';
 import updateUserRecords from '../../firebase/updateUserRecods';
+import CropEasy from '../crop/CropEasy';
+import { Crop } from "@mui/icons-material";
+import { useEffect } from 'react';
 
 const Profile = () => {
-    const { currentUser,  setLoading, setAlert} = useAuth()
+    const { currentUser,  setLoading, setAlert, modal, setModal} = useAuth()
     const [ name, setName ] = useState(currentUser?.displayName)
     const [ photoURL, setPhotoURL ] = useState(currentUser?.photoURL)
     const [ file, setFile ] = useState(null)
+    const [ openCrop, setOpenCrop ] = useState(false)
+
 
     const handleSubmit = async (e) =>{
         // submit details to backend
@@ -86,11 +92,19 @@ const Profile = () => {
         if(profilePhoto){
             setFile(profilePhoto)
             setPhotoURL(URL.createObjectURL(profilePhoto))
-            // setOpenCrop(true)
+            setOpenCrop(true)
         }
     }
 
-    return (
+    useEffect(()=>{
+        if(openCrop){
+            setModal({...modal, title:'Crop profile Photo'})
+        }else{
+            setModal({...modal, title:"Update Profile"})
+        }
+    },[openCrop])
+
+    return !openCrop ? (
         <form onSubmit = {handleSubmit}>
             <DialogContent dividers>
                 <DialogContentText sx={{marginBottom: "10px"}}>
@@ -109,7 +123,15 @@ const Profile = () => {
                                 <Avatar src={photoURL} sx={{width: 75, height: 75, cursor:'pointer'}}/>
                         </label>
                     </Tooltip>
-                    {/* crop button and functionality here */}
+                    {file && (
+                        <IconButton
+                            aria-label="crop"
+                            color="primary"
+                            onClick = {()=>setOpenCrop(true)}
+                        >
+                            <Crop />
+                        </IconButton>
+                    )}
                     <TextField 
                         autoFocus
                         margin="normal"
@@ -134,6 +156,8 @@ const Profile = () => {
                 <SubmitButton />
             </DialogActions>
         </form>
+    ) :(
+        <CropEasy {...{photoURL, setOpenCrop, setPhotoURL, setFile}}/>
     )
 }
 
